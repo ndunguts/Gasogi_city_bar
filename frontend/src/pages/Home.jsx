@@ -1,36 +1,35 @@
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import ProductCard from "../components/ProductCard";
-import styles from "./Home.module.css";
+import styles from "./Home.module.css"; // shyiraho path nyayo
 
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [category, setCategory] = useState("ibiribwa");
+  const [category, setCategory] = useState("ibiribwa"); // default = ibiribwa
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const carouselInterval = useRef(null);
 
-  // API URL (relative path muri production)
-  const API_URL =
-    process.env.NODE_ENV === "production"
-      ? "/api/products/"
-      : "http://localhost:8000/api/products/";
-
+  // Fetch all products
   useEffect(() => {
     axios
-      .get(API_URL)
-      .then((response) => setProducts(response.data))
+      .get("/api/products/")
+      .then((response) => {
+        setProducts(response.data);
+      })
       .catch((error) => console.error("Error fetching products:", error));
-  }, [API_URL]);
+  }, []);
 
+  // Whenever products or category change => filter
   useEffect(() => {
     const filtered = products.filter(
       (p) => p.category?.toLowerCase() === category.toLowerCase()
     );
     setFilteredProducts(filtered);
-    setCurrentImageIndex(0);
+    setCurrentImageIndex(0); // reset carousel kuri first item
   }, [products, category]);
 
+  // Carousel auto change
   useEffect(() => {
     if (filteredProducts.length === 0) return;
 
@@ -57,6 +56,7 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
+      {/* 🔹 Filter buttons */}
       <div className="flex gap-4 mb-4">
         <button
           onClick={() => setCategory("ibiribwa")}
@@ -84,6 +84,7 @@ export default function Home() {
         ))}
       </div>
 
+      {/* Carousel */}
       <div className={styles.carouselContainer}>
         {filteredProducts.length > 0 ? (
           <>
