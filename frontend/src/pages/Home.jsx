@@ -1,32 +1,36 @@
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import ProductCard from "../components/ProductCard";
-import styles from "./Home.module.css"; // shyiraho path nyayo
+import styles from "./Home.module.css";
 
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [category, setCategory] = useState("ibiribwa"); // default = ibiribwa
+  const [category, setCategory] = useState("ibiribwa");
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const carouselInterval = useRef(null);
+
+  // 🟢 Production-friendly API URL
+  const API_URL =
+    process.env.NODE_ENV === "production" ? "/api/products/" : "http://localhost:8000/api/products/";
 
   // Fetch all products
   useEffect(() => {
     axios
-      .get("http://13.60.231.199:8000/api/products/")
+      .get(API_URL)
       .then((response) => {
         setProducts(response.data);
       })
       .catch((error) => console.error("Error fetching products:", error));
-  }, []);
+  }, [API_URL]);
 
-  // Whenever products or category change => filter
+  // Filter products based on category
   useEffect(() => {
     const filtered = products.filter(
       (p) => p.category?.toLowerCase() === category.toLowerCase()
     );
     setFilteredProducts(filtered);
-    setCurrentImageIndex(0); // reset carousel kuri first item
+    setCurrentImageIndex(0);
   }, [products, category]);
 
   // Carousel auto change
@@ -56,7 +60,7 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      {/* 🔹 Filter buttons */}
+      {/* Filter buttons */}
       <div className="flex gap-4 mb-4">
         <button
           onClick={() => setCategory("ibiribwa")}
