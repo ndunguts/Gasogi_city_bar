@@ -10,21 +10,19 @@ export default function Home() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const carouselInterval = useRef(null);
 
-  // 🟢 Production-friendly API URL
+  // API URL (relative path muri production)
   const API_URL =
-    process.env.NODE_ENV === "production" ? "/api/products/" : "http://localhost:8000/api/products/";
+    process.env.NODE_ENV === "production"
+      ? "/api/products/"
+      : "http://localhost:8000/api/products/";
 
-  // Fetch all products
   useEffect(() => {
     axios
       .get(API_URL)
-      .then((response) => {
-        setProducts(response.data);
-      })
+      .then((response) => setProducts(response.data))
       .catch((error) => console.error("Error fetching products:", error));
   }, [API_URL]);
 
-  // Filter products based on category
   useEffect(() => {
     const filtered = products.filter(
       (p) => p.category?.toLowerCase() === category.toLowerCase()
@@ -33,7 +31,6 @@ export default function Home() {
     setCurrentImageIndex(0);
   }, [products, category]);
 
-  // Carousel auto change
   useEffect(() => {
     if (filteredProducts.length === 0) return;
 
@@ -60,7 +57,6 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      {/* Filter buttons */}
       <div className="flex gap-4 mb-4">
         <button
           onClick={() => setCategory("ibiribwa")}
@@ -88,7 +84,6 @@ export default function Home() {
         ))}
       </div>
 
-      {/* Carousel */}
       <div className={styles.carouselContainer}>
         {filteredProducts.length > 0 ? (
           <>
