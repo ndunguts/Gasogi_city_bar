@@ -174,4 +174,5 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # cyangwa URL ya React yawe
 ]
+STATIC_ROOT = BASE_DIR / "static"  # aha niho collectstatic izajya ishyira static files
 
