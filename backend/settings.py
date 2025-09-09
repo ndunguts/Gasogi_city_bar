@@ -25,7 +25,24 @@ SECRET_KEY = 'django-insecure-jz431%x6lv4j5^2*yhv0d0lhekih6a1vrr%7oj%8ahz4-csqon
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# Static files
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / "static"  # aha niho collectstatic izajya
+
+# Media files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / "media"
+
+# Allowed hosts
 ALLOWED_HOSTS = ["13.60.231.199", "localhost", "127.0.0.1"]
+
+# CORS
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://13.60.231.199"
+]
 
 
 
@@ -122,10 +139,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -170,9 +184,3 @@ LOGGING = {
     },
 }
 
-CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # cyangwa URL ya React yawe
-]
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / "static"  # aha niho collectstatic izashyira static files zose
