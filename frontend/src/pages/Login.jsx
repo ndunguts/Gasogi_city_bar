@@ -17,12 +17,12 @@ export default function Login() {
     setSuccess("")
 
     if (!email || !password) {
-      setError("Nylyuzuzemo email na password byose.")
+      setError("unzuzamo email na password byose.")
       return
     }
 
     try {
-      const res = await axios.get("http://127.0.0.1:8000/api/abakozi/")
+      const res = await axios.get("http://13.60.231.199/api/abakozi/")
       const abakoziList = res.data
       const user = abakoziList.find(
         (u) => u.email_u === email && u.phone_u === password

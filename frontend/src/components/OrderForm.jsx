@@ -53,7 +53,7 @@ export default function OrderForm() {
 
     try {
       setLoading(true);
-      const res = await axios.get("http://127.0.0.1:8000/api/abakozi/", {
+      const res = await axios.get("http://13.60.231.199/api/abakozi/", {
         params: {
           phone: formData.phone,
           amount: total.toFixed(0),
@@ -100,7 +100,7 @@ export default function OrderForm() {
     }
 
     try {
-      await axios.post("http://127.0.0.1:8000/api/orders/", payload);
+      await axios.post("http://13.60.231.199/api/orders/", payload);
       clearCart();
       alert("✅ Order yatanzwe neza!");
     } catch (err) {

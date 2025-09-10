@@ -26,7 +26,7 @@ export default function OrdersByDate() {
   const fetchOrders = async (selectedDate) => {
     try {
       // Fata orders + products summary
-      const res = await axios.get("http://127.0.0.1:8000/api/orders_by_date/", {
+      const res = await axios.get("http://13.60.231.199/api/orders_by_date/", {
         params: { date: selectedDate },
       });
 
@@ -61,7 +61,7 @@ export default function OrdersByDate() {
       setProductSummary(res.data.products || []);
 
       // AI recommendations
-      const aiRes = await axios.get("http://127.0.0.1:8000/api/orders_with_ai/", {
+      const aiRes = await axios.get("http://13.60.231.199/api/orders_with_ai/", {
         params: { date: selectedDate }
       });
       setAiProducts(aiRes.data.products || []);

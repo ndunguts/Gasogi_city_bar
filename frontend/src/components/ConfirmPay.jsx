@@ -25,7 +25,7 @@ export default function OrderDetail() {
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-        const res = await axios.get(`http://localhost:8000/api/orders/${id}/`);
+        const res = await axios.get(`http://13.60.231.199/api/orders/${id}/`);
         setOrder(res.data);
         setCheckboxValue(res.data.confirm_money || null);
       } catch (err) {
@@ -43,7 +43,7 @@ export default function OrderDetail() {
     setCheckboxValue(value);
 
     try {
-      await axios.patch(`http://localhost:8000/api/orders/${id}/`, {
+      await axios.patch(`http://13.60.231.199/api/orders/${id}/`, {
         confirm_money: value,
       });
       setOrder((prev) => ({ ...prev, confirm_money: value }));
