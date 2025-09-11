@@ -32,9 +32,9 @@ function NavbarItems() {
   }
 
   return (
-    <div className="flex gap-4 items-center">
+    <div className="header_bar">
       {/* Cart link */}
-      <Link to="/cart" className="text-sm text-red-500 no-underline hover:underline">
+      <Link to="/cart" className="link">
         🛒 Igikapu ({cartItems.length})
       </Link>
 
@@ -42,11 +42,11 @@ function NavbarItems() {
       {location.pathname === "/cart" && cartItems.length > 0 && (
         <>
           {!user ? (
-            <Link to="/order" className="text-xl text-green-600 hover:underline">
+            <Link to="/order" className="link">
               📦 Ohereza Order ({cartItems.length})
             </Link>
           ) : (
-            <Link to="/order" className="text-sm text-green-600 hover:underline">  
+            <Link to="/order" className="link">  
               📦 Kugurisha ({cartItems.length})
             </Link>
           )}
@@ -56,16 +56,16 @@ function NavbarItems() {
       {/* Extra menu by role */}
       {user && (
         <>
-          <Link to="/myorder" className="text-sm text-purple-600 hover:underline">
+          <Link to="/myorder" className="link">
             MyOrder
           </Link>
 
           {user.status === "Manager" && (
             <>
-              <Link to="/orderview" className="text-sm text-blue-600 hover:underline">
+              <Link to="/orderview" className="link">
                 Views_Order
               </Link>
-              <Link to="/employees" className="text-sm text-orange-600 hover:underline">
+              <Link to="/employees" className="link">
                 Employees
               </Link>
             </>
@@ -73,13 +73,13 @@ function NavbarItems() {
 
           {user.status === "Boss" && (
             <>
-              <Link to="/orderview" className="text-sm text-blue-600 hover:underline">
+              <Link to="/orderview" className="link">
                 Views_Order
               </Link>
-              <Link to="/employees" className="text-sm text-orange-600 hover:underline">
+              <Link to="/employees" className="link">
                 Employees
               </Link>
-              <Link to="/orderdate" className="text-sm text-gray-600 hover:underline">
+              <Link to="/orderdate" className="link">
                 ⚙️ Setting
               </Link>
             </>

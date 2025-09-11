@@ -13,13 +13,11 @@ export default function OrderDetail() {
   const [checkboxValue, setCheckboxValue] = useState(null);
   const [error, setError] = useState(null);
 
-  // Fata user uri logged in muri localStorage
   const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
-    // Access control: niba user atari logged in cyangwa status atari Manager/Boss
     if (!user || !["Manager", "Boss"].includes(user.status)) {
-      navigate("/"); // subira kuri home page
+      navigate("/");
       return;
     }
 
@@ -35,6 +33,7 @@ export default function OrderDetail() {
         setLoading(false);
       }
     };
+
     fetchOrder();
   }, [id, navigate, user]);
 
@@ -56,31 +55,34 @@ export default function OrderDetail() {
   };
 
   if (!user || !["Manager", "Boss"].includes(user.status)) return null;
-  if (loading) return <p className="p-6 text-gray-600">Loading order...</p>;
-  if (!order) return <p className="p-6 text-red-500">Order not found</p>;
+  if (loading) return <p className="p-4 text-gray-600 text-sm">Loading order...</p>;
+  if (!order) return <p className="p-4 text-red-500 text-sm">Order not found</p>;
 
   return (
-    <div className="p-6 max-w-3xl mx-auto">
-      <h2 className="text-2xl font-bold mb-4 text-gray-800">📦 Order #{order.id}</h2>
+    <div className="p-3 sm:p-6 max-w-screen-sm sm:max-w-3xl mx-auto">
+      <h2 className="text-lg sm:text-2xl font-bold mb-3 text-gray-800">
+        📦 Order #{order.id}
+      </h2>
 
-      {error && <p className="mb-4 text-red-600 font-semibold">{error}</p>}
+      {error && <p className="mb-3 text-red-600 font-semibold text-sm">{error}</p>}
 
-      <div className="bg-white shadow-md rounded-2xl p-4 mb-6">
-        <p><strong>Customer:</strong> {order.customer_name}</p>
-        <p><strong>Phone:</strong> {order.customer_phone}</p>
-        <p><strong>Delivery:</strong> {order.delivery_method}</p>
-        <p><strong>Status:</strong> {order.status}</p>
-        <p><strong>Note:</strong> {order.note || "No note"}</p>
-        <p><strong>Date:</strong> {new Date(order.created_at).toLocaleString()}</p>
+      {/* Order Info */}
+      <div className="bg-white shadow rounded-lg p-3 sm:p-4 mb-4 text-sm sm:text-base">
+        <p className="truncate"><strong>Customer:</strong> {order.customer_name}</p>
+        <p className="truncate"><strong>Phone:</strong> {order.customer_phone}</p>
+        <p className="truncate"><strong>Delivery:</strong> {order.delivery_method}</p>
+        <p className="truncate"><strong>Status:</strong> {order.status}</p>
+        <p className="truncate"><strong>Note:</strong> {order.note || "No note"}</p>
+        <p className="truncate"><strong>Date:</strong> {new Date(order.created_at).toLocaleString()}</p>
 
         {showCheckbox && (
-          <div className="mt-4">
+          <div className="mt-3">
             <label className="inline-flex items-center">
               <input
                 type="checkbox"
                 checked={checkboxValue === "ok"}
                 onChange={handleCheckboxChange}
-                className="form-checkbox h-5 w-5 text-blue-600"
+                className="form-checkbox h-4 w-4 sm:h-5 sm:w-5 text-blue-600"
               />
               <span className="ml-2 text-gray-700">Confirm Order</span>
             </label>
@@ -88,23 +90,24 @@ export default function OrderDetail() {
         )}
       </div>
 
-      <div className="overflow-x-auto shadow-lg rounded-2xl mb-4">
-        <table className="min-w-full bg-white border border-gray-200 rounded-2xl">
-          <thead>
-            <tr className="bg-gray-100 text-left text-gray-600 text-sm uppercase">
-              <th className="py-3 px-4">Product</th>
-              <th className="py-3 px-4">Quantity</th>
-              <th className="py-3 px-4">Price</th>
-              <th className="py-3 px-4">Subtotal</th>
+      {/* Products Table for Desktop */}
+      <div className="hidden sm:block overflow-hidden shadow rounded-lg mb-4">
+        <table className="min-w-full bg-white border border-gray-200 rounded-lg text-sm table-auto">
+          <thead className="bg-gray-100 text-left text-gray-600 uppercase text-xs sm:text-sm">
+            <tr>
+              <th className="py-1 px-2 sm:py-2 sm:px-3 w-1/4 truncate">Product</th>
+              <th className="py-1 px-2 sm:py-2 sm:px-3 w-1/6 truncate">Qty</th>
+              <th className="py-1 px-2 sm:py-2 sm:px-3 w-1/4 truncate">Price</th>
+              <th className="py-1 px-2 sm:py-2 sm:px-3 w-1/4 truncate">Subtotal</th>
             </tr>
           </thead>
-          <tbody className="text-gray-700 text-sm">
+          <tbody className="text-gray-700 text-xs sm:text-sm">
             {order.items.map((item, index) => (
               <tr key={index} className="border-t hover:bg-gray-50 transition">
-                <td className="py-3 px-4">{item.product_name}</td>
-                <td className="py-3 px-4">{item.quantity}</td>
-                <td className="py-3 px-4">{item.price} RWF</td>
-                <td className="py-3 px-4 font-semibold">
+                <td className="py-1 px-2 sm:py-2 sm:px-3 truncate">{item.product_name}</td>
+                <td className="py-1 px-2 sm:py-2 sm:px-3 truncate">{item.quantity}</td>
+                <td className="py-1 px-2 sm:py-2 sm:px-3 truncate">{item.price} RWF</td>
+                <td className="py-1 px-2 sm:py-2 sm:px-3 font-semibold truncate">
                   {(parseFloat(item.price) * item.quantity).toFixed(2)} RWF
                 </td>
               </tr>
@@ -113,16 +116,18 @@ export default function OrderDetail() {
         </table>
       </div>
 
-      <div className="flex justify-end">
-        <p className="text-lg font-bold text-gray-800">
-          Total: {order.total} RWF
-        </p>
+      
+     
+
+      {/* Total */}
+      <div className="flex justify-end text-sm sm:text-base font-bold text-gray-800 mb-4">
+        Total: {order.total} RWF
       </div>
 
-      <div className="mt-6">
+      <div className="mt-2">
         <button
           onClick={() => navigate(-1)}
-          className="bg-gray-500 text-black px-4 py-2 rounded-lg hover:bg-gray-600 transition"
+          className="bg-gray-500 text-white px-3 sm:px-4 py-1 sm:py-2 rounded-lg hover:bg-gray-600 transition text-sm sm:text-base"
         >
           ← Back
         </button>

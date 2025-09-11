@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useAuth } from "../context/AuthContext"; // 👈 ongera iyi
+import { useAuth } from "../context/AuthContext";
 
 export default function OrderDetail() {
   const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const { user } = useAuth(); // 👈 fata user muri context
+  const { user } = useAuth();
   const showCheckbox = location.state?.fromorderview || false;
 
   const [order, setOrder] = useState(null);
@@ -15,10 +15,9 @@ export default function OrderDetail() {
   const [checkboxValue, setCheckboxValue] = useState(null);
   const [error, setError] = useState(null);
 
-  // 🚨 Access control
   useEffect(() => {
-    if (!user || (user.status !== "Manager" && user.status !== "Boss")) {
-      navigate("/"); // redirect kuri home niba atari Manager cyangwa Boss
+    if (!user || !["Manager", "Boss"].includes(user.status)) {
+      navigate("/");
     }
   }, [user, navigate]);
 
@@ -59,16 +58,15 @@ export default function OrderDetail() {
   if (!order) return <p className="p-6 text-red-500">Order not found</p>;
 
   return (
-    <div className="p-6 max-w-3xl mx-auto">
-      <h2 className="text-2xl font-bold mb-4 text-gray-800">
+    <div className="p-4 sm:p-6 max-w-3xl mx-auto">
+      <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-800">
         📦 Order #{order.id}
       </h2>
 
-      {/* Error message */}
       {error && <p className="mb-4 text-red-600 font-semibold">{error}</p>}
 
       {/* Order Info */}
-      <div className="bg-white shadow-md rounded-2xl p-4 mb-6">
+      <div className="bg-white shadow-md rounded-2xl p-4 mb-6 space-y-1 text-sm sm:text-base">
         <p><strong>Customer:</strong> {order.customer_name}</p>
         <p><strong>Phone:</strong> {order.customer_phone}</p>
         <p><strong>Delivery:</strong> {order.delivery_method}</p>
@@ -76,9 +74,8 @@ export default function OrderDetail() {
         <p><strong>Note:</strong> {order.note || "No note"}</p>
         <p><strong>Date:</strong> {new Date(order.created_at).toLocaleString()}</p>
 
-        {/* Checkbox */}
         {showCheckbox && (
-          <div className="mt-4">
+          <div className="mt-3">
             <label className="inline-flex items-center">
               <input
                 type="checkbox"
@@ -92,24 +89,24 @@ export default function OrderDetail() {
         )}
       </div>
 
-      {/* Items Table */}
-      <div className="overflow-x-auto shadow-lg rounded-2xl mb-4">
-        <table className="min-w-full bg-white border border-gray-200 rounded-2xl">
+      {/* Desktop Table */}
+      <div className="hidden sm:block overflow-x-auto shadow-lg rounded-2xl mb-4">
+        <table className="min-w-full bg-white border border-gray-200 rounded-2xl text-sm sm:text-base">
           <thead>
-            <tr className="bg-gray-100 text-left text-gray-600 text-sm uppercase">
-              <th className="py-3 px-4">Product</th>
-              <th className="py-3 px-4">Quantity</th>
-              <th className="py-3 px-4">Price</th>
-              <th className="py-3 px-4">Subtotal</th>
+            <tr className="bg-gray-100 text-left text-gray-600 uppercase text-xs sm:text-sm">
+              <th className="py-2 px-3">Product</th>
+              <th className="py-2 px-3">Quantity</th>
+              <th className="py-2 px-3">Price</th>
+              <th className="py-2 px-3">Subtotal</th>
             </tr>
           </thead>
-          <tbody className="text-gray-700 text-sm">
+          <tbody className="text-gray-700">
             {order.items.map((item, index) => (
               <tr key={index} className="border-t hover:bg-gray-50 transition">
-                <td className="py-3 px-4">{item.product_name}</td>
-                <td className="py-3 px-4">{item.quantity}</td>
-                <td className="py-3 px-4">{item.price} RWF</td>
-                <td className="py-3 px-4 font-semibold">
+                <td className="py-2 px-3 truncate max-w-xs">{item.product_name}</td>
+                <td className="py-2 px-3">{item.quantity}</td>
+                <td className="py-2 px-3">{item.price} RWF</td>
+                <td className="py-2 px-3 font-semibold">
                   {(parseFloat(item.price) * item.quantity).toFixed(2)} RWF
                 </td>
               </tr>
@@ -118,18 +115,18 @@ export default function OrderDetail() {
         </table>
       </div>
 
+   
+
       {/* Total */}
-      <div className="flex justify-end">
-        <p className="text-lg font-bold text-gray-800">
-          Total: {order.total} RWF
-        </p>
+      <div className="flex justify-end text-lg sm:text-xl font-bold text-gray-800 mb-6">
+        Total: {order.total} RWF
       </div>
 
       {/* Back button */}
-      <div className="mt-6">
+      <div>
         <button
           onClick={() => navigate(-1)}
-          className="bg-gray-500 text-black px-4 py-2 rounded-lg hover:bg-gray-600 transition"
+          className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition"
         >
           ← Back
         </button>
