@@ -2,6 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
+// Axios instance ifite baseURL na credentials
+const api = axios.create({
+  baseURL: "http://16.171.195.132/api/",
+  withCredentials: true, // kohereza cookies/CSRF
+});
+
 export default function OrderDetail() {
   const { id } = useParams();
   const location = useLocation();
@@ -23,7 +29,7 @@ export default function OrderDetail() {
 
     const fetchOrder = async () => {
       try {
-        const res = await axios.get(`http://16.171.195.132/api/orders/${id}/`);
+        const res = await api.get(`orders/${id}/`);
         setOrder(res.data);
         setCheckboxValue(res.data.confirm || null);
       } catch (err) {
@@ -42,15 +48,13 @@ export default function OrderDetail() {
     setCheckboxValue(value);
 
     try {
-      await axios.patch(`http://16.171.195.132/api/orders/${id}/`, {
-        confirm: value,
-      });
-      setOrder((prev) => ({ ...prev, confirm: value }));
+      const res = await api.patch(`orders/${id}/`, { confirm: value });
+      setOrder(res.data); // update order ivuguruye
       setError(null);
     } catch (err) {
-      console.error(err);
+      console.error(err.response?.status, err.message);
       setError("Habaye ikibazo mu kubika changes.");
-      setCheckboxValue(order.confirm || null);
+      setCheckboxValue(order.confirm || null); // subiza agaciro ka kera
     }
   };
 
@@ -90,7 +94,7 @@ export default function OrderDetail() {
         )}
       </div>
 
-      {/* Products Table for Desktop */}
+      {/* Products Table */}
       <div className="hidden sm:block overflow-hidden shadow rounded-lg mb-4">
         <table className="min-w-full bg-white border border-gray-200 rounded-lg text-sm table-auto">
           <thead className="bg-gray-100 text-left text-gray-600 uppercase text-xs sm:text-sm">
@@ -115,9 +119,6 @@ export default function OrderDetail() {
           </tbody>
         </table>
       </div>
-
-      
-     
 
       {/* Total */}
       <div className="flex justify-end text-sm sm:text-base font-bold text-gray-800 mb-4">
