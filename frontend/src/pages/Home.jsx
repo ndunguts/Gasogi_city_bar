@@ -1,32 +1,35 @@
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import ProductCard from "../components/ProductCard";
-import styles from "./Home.module.css"; // shyiraho path nyayo
+import styles from "./Home.module.css";
 
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [category, setCategory] = useState("ibiribwa"); // default = ibiribwa
+  const [category, setCategory] = useState("ibiribwa"); // default
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const carouselInterval = useRef(null);
 
-  // Fetch all products
+  // Fetch all products from Django API
   useEffect(() => {
     axios
       .get("http://16.171.195.132/api/products/")
       .then((response) => {
-        setProducts(response.data);
+        // Use response.data.products because API returns an object
+        setProducts(response.data.products || []);
       })
       .catch((error) => console.error("Error fetching products:", error));
   }, []);
 
-  // Whenever products or category change => filter
+  // Filter products based on category
   useEffect(() => {
-    const filtered = products.filter(
-      (p) => p.category?.toLowerCase() === category.toLowerCase()
-    );
+    const filtered = Array.isArray(products)
+      ? products.filter(
+          (p) => p.category?.toLowerCase() === category.toLowerCase()
+        )
+      : [];
     setFilteredProducts(filtered);
-    setCurrentImageIndex(0); // reset carousel kuri first item
+    setCurrentImageIndex(0); // reset carousel
   }, [products, category]);
 
   // Carousel auto change
@@ -56,7 +59,7 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      {/* 🔹 Filter buttons */}
+      {/* Filter buttons */}
       <div className="flex gap-4 mb-4">
         <button
           onClick={() => setCategory("ibiribwa")}
@@ -76,6 +79,7 @@ export default function Home() {
         </button>
       </div>
 
+      {/* Products list */}
       <div className={styles.productsList}>
         {filteredProducts.map((product) => (
           <div key={product.id} className={styles.productCardWrapper}>
@@ -89,8 +93,8 @@ export default function Home() {
         {filteredProducts.length > 0 ? (
           <>
             <img
-              src={filteredProducts[currentImageIndex].image}
-              alt={filteredProducts[currentImageIndex].name}
+              src={filteredProducts[currentImageIndex]?.image}
+              alt={filteredProducts[currentImageIndex]?.name || ""}
               className={styles.carouselImage}
             />
             <div className={styles.buttonsContainer}>
