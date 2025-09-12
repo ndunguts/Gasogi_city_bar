@@ -5,7 +5,7 @@ import axios from "axios";
 // Axios instance ifite baseURL na credentials
 const api = axios.create({
   baseURL: "http://16.171.195.132/api/",
-  withCredentials: true, // kohereza cookies/CSRF
+  withCredentials: true, // kohereza cookies/CSRF niba bikenewe
 });
 
 export default function OrderDetail() {
@@ -45,16 +45,17 @@ export default function OrderDetail() {
 
   const handleCheckboxChange = async (e) => {
     const value = e.target.checked ? "ok" : null;
-    setCheckboxValue(value);
+    setCheckboxValue(value); // ihite ihindura UI
 
     try {
       const res = await api.patch(`orders/${id}/`, { confirm: value });
-      setOrder(res.data); // update order ivuguruye
+      setOrder(res.data); // update order na server response
       setError(null);
     } catch (err) {
       console.error(err.response?.status, err.message);
       setError("Habaye ikibazo mu kubika changes.");
-      setCheckboxValue(order.confirm || null); // subiza agaciro ka kera
+      // Garura agaciro ka kera niba server itakiriye
+      setCheckboxValue(order.confirm || null);
     }
   };
 
