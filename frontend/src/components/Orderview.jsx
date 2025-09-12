@@ -18,7 +18,7 @@ export default function OrdersTable() {
   useEffect(() => {
     const fetchOrders = () => {
       axios
-        .get("http://13.60.231.199/api/orders/")
+        .get("http://16.171.195.132/api/orders/")
         .then((res) => {
           setOrders(res.data);
           setLoading(false);

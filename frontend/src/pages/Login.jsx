@@ -22,7 +22,7 @@ export default function Login() {
     }
 
     try {
-      const res = await axios.get("http://13.60.231.199/api/abakozi/")
+      const res = await axios.get("http://16.171.195.132/api/abakozi/")
       const abakoziList = res.data
       const user = abakoziList.find(
         (u) => u.email_u === email && u.phone_u === password

@@ -23,7 +23,7 @@ export default function OrdersByDate() {
     setLoading(true);
     try {
       const res = await axios.get(
-        "http://13.60.231.199/api/orders_by_date/",
+        "http://16.171.195.132/api/orders_by_date/",
         { params: { date: selectedDate } }
       );
       const confirmedOrders = res.data.orders.filter((o) => o.confirm === "ok");
@@ -49,7 +49,7 @@ export default function OrdersByDate() {
       setProductSummary(res.data.products || []);
 
       const aiRes = await axios.get(
-        "http://13.60.231.199/api/orders_with_ai/",
+        "http://16.171.195.132/api/orders_with_ai/",
         { params: { date: selectedDate } }
       );
       setAiProducts(aiRes.data.products || []);

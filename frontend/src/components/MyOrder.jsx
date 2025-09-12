@@ -24,7 +24,7 @@ export default function OrdersTable() {
 
     const fetchOrders = async () => {
       try {
-        const res = await axios.get("http://13.60.231.199/api/orders/", {
+        const res = await axios.get("http://16.171.195.132/api/orders/", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access")}`,
           },

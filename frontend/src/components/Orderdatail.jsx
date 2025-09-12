@@ -23,7 +23,7 @@ export default function OrderDetail() {
 
     const fetchOrder = async () => {
       try {
-        const res = await axios.get(`http://13.60.231.199/api/orders/${id}/`);
+        const res = await axios.get(`http://16.171.195.132/api/orders/${id}/`);
         setOrder(res.data);
         setCheckboxValue(res.data.confirm || null);
       } catch (err) {
@@ -42,7 +42,7 @@ export default function OrderDetail() {
     setCheckboxValue(value);
 
     try {
-      await axios.patch(`http://13.60.231.199/api/orders/${id}/`, {
+      await axios.patch(`http://16.171.195.132/api/orders/${id}/`, {
         confirm: value,
       });
       setOrder((prev) => ({ ...prev, confirm: value }));

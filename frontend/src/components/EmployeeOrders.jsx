@@ -26,7 +26,7 @@ export default function EmployeeOrders() {
 
     // Fata orders z'umukozi
     axios
-      .get(`http://13.60.231.199/api/employee/${employeeSlug}/orders/`)
+      .get(`http://16.171.195.132/api/employee/${employeeSlug}/orders/`)
       .then((res) => {
         const filtered = res.data.filter(
           (order) => !order.confirm_money || order.confirm_money === "null"
@@ -40,7 +40,7 @@ export default function EmployeeOrders() {
 
     // Fata amakuru y'umukozi
     axios
-      .get(`http://13.60.231.199/api/abakozi/${employeeSlug}/`)
+      .get(`http://16.171.195.132/api/abakozi/${employeeSlug}/`)
       .then((res) => setEmployee(res.data))
       .catch((err) => {
         console.error(err);
