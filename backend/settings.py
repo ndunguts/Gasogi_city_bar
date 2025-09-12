@@ -30,11 +30,11 @@ DEBUG = True
 
 # Static files
 STATIC_URL = '/static/'
-STATIC_ROOT = '/home/ubuntu/project/Gasogi_center_bar/static/'
+STATIC_ROOT = BASE_DIR / "static"  # aha niho collectstatic izajya
 
 # Media files
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/home/ubuntu/project/Gasogi_center_bar/media/'
+MEDIA_ROOT = BASE_DIR / "media"
 
 # Allowed hosts
 ALLOWED_HOSTS = ["16.171.195.132", "localhost", "127.0.0.1"]
