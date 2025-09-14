@@ -127,6 +127,15 @@
   }
   .carouselImage {
     height: 10rem;
+    flex: 1 1 auto;
+    min-width: 100%;            /* take full width */
+    max-width: 100%;
+  }
+    .productsList {
+    flex-direction: column;     /* instead of row */
+    overflow-x: hidden;         /* stop horizontal scroll */
+    overflow-y: auto;           /* allow vertical scroll */
+    scroll-snap-type: none;     /* no snap needed on vertical */
   }
 }
 
