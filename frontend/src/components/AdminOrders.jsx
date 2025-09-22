@@ -6,7 +6,7 @@ export default function AdminOrders() {
   const [orders, setOrders] = useState([])
 
   useEffect(() => {
-    axios.get('http://16.171.195.132/api/orders/')
+    axios.get('http://13.53.133.56/api/orders/')
       .then(res => setOrders(res.data))
       .catch(err => console.error(err))
   }, [])

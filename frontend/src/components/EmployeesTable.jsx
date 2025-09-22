@@ -18,7 +18,7 @@ export default function EmployeesTable() {
 
     setLoading(true);
     axios
-      .get("http://16.171.195.132/api/abakozi/")
+      .get("http://13.53.133.56/api/abakozi/")
       .then((res) => setEmployees(res.data))
       .catch((err) => {
         console.error(err);
