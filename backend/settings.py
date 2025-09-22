@@ -37,7 +37,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / "media"
 
 # Allowed hosts
-ALLOWED_HOSTS = ["16.171.195.132", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["16.171.195.132","13.53.133.56", "localhost", "127.0.0.1"]
 
 # CORS
 CORS_ALLOW_ALL_ORIGINS = True
