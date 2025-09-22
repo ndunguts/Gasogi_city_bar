@@ -13,7 +13,7 @@ export default function Home() {
   // Fetch all products
   useEffect(() => {
     axios
-      .get("http://16.171.195.132/api/products/")
+      .get("http://13.53.133.56/api/products/")
       .then((response) => {
         setProducts(response.data);
       })
