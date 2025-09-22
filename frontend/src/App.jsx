@@ -117,7 +117,7 @@ function App() {
             <div className="w-full bg-white shadow-md">
               <div className="container mx-auto flex justify-between items-center p-4">
                 <h1 className="text-xl font-bold text-blue-700">
-                  <Link to="/" className='head-logo'>Gasogi center bar</Link>
+                  <Link to="/" className='head-logo'>Gasogi city bar</Link>
                 </h1>
                 <NavbarItems />
               </div>
